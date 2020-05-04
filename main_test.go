@@ -45,9 +45,10 @@ func TestTerraformRunner(t *testing.T) {
 
 	for i := 0; i < 5; i++ {
 		t.Run(fmt.Sprintf("Instance %d", i+1), func(t *testing.T) {
+			number := i+1
 			runner(t, resource.TestCase{
 				PreCheck:     func() {
-					print("precheck", i)
+					print("precheck", number)
 				},
 				Providers:    map[string]terraform.ResourceProvider{
 					"rick": &schema.Provider{
@@ -69,7 +70,7 @@ func TestTerraformRunner(t *testing.T) {
 					},
 				},
 				CheckDestroy: func(state *terraform.State) error {
-					print("destroy", i)
+					print("destroy", number)
 					return nil
 				},
 				Steps: []resource.TestStep{
@@ -77,7 +78,7 @@ func TestTerraformRunner(t *testing.T) {
 						Config: `data "rick_and_morty" "test" { }`,
 						Check: resource.ComposeTestCheckFunc(
 							func(state *terraform.State) error {
-								print("check func", i)
+								print("check func", number)
 								return nil
 							},
 						),
