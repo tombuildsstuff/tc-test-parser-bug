@@ -37,9 +37,14 @@ func TestTerraformRunner(t *testing.T) {
 		log.Printf("stdout - %d, %s", instance, words)
 	}
 
+	var runner = resource.Test
+	if os.Getenv("PARALLEL") != "" {
+		runner = resource.ParallelTest
+	}
+
 	for i := 0; i < 5; i++ {
 		t.Run(fmt.Sprintf("Instance %d", i+1), func(t *testing.T) {
-			resource.Test(t, resource.TestCase{
+			runner(t, resource.TestCase{
 				PreCheck:     func() {
 					print("precheck", i)
 				},
