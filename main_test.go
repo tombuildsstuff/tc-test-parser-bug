@@ -33,8 +33,8 @@ func TestFailed(t *testing.T) {
 
 func TestTerraformRunner(t *testing.T) {
 	var print = func(words string, instance int) {
+		os.Stdout.WriteString(fmt.Sprintf("stdout - %d - %s\n", instance, words))
 		os.Stderr.WriteString(fmt.Sprintf("stderr - %d - %s\n", instance, words))
-		log.Printf("stdout - %d, %s", instance, words)
 	}
 
 	var runner = resource.Test
